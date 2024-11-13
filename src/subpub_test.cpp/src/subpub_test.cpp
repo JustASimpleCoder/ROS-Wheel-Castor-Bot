@@ -33,9 +33,9 @@ class MinimalPublisher : public rclcpp::Node
       publisher_->publish(message);
 
       auto message2 = std_msgs::msg::String();
-      messsage2.data = "I am trying to find my location" + std::to_string(count_++);
+      message2.data = "I am trying to find my location" + std::to_string(count_++);
       RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message2.data.c_str());
-      publisher2_->publish(message);
+      publisher2_->publish(message2);
 
     }
     rclcpp::TimerBase::SharedPtr timer_;
