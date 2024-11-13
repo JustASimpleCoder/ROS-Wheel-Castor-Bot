@@ -51,10 +51,10 @@ class MinimalSubscriber : public rclcpp::Node
     : Node("minimal_subscriber")
     {
       subscription_ = this->create_subscription<std_msgs::msg::String>(
-      "topic", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1));
+      "topic", 10, std::bind(&MinimalSubscriber::topic_callback, this,std::placeholders::_1));
 
       subscription2_ = this->create_subscription<std_msgs::msg::String>(
-      "my_loc", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1));
+      "my_loc", 10, std::bind(&MinimalSubscriber::topic_callback, this, std::placeholders::_1)); 
     }
 
   private:
