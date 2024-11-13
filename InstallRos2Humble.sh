@@ -3,7 +3,7 @@
 # List of valid ROS 2 distributions
 valid_distros=("ardent" "bouncy" "crystal" "dashing" "eloquent" "foxy" "galactic" "rolling" "humble" "iron")
 
-# Check if running as root
+# Check if running as root otherwise exit script
 if [ "$EUID" -ne 0 ]; then
     echo "Please run as root (e.g., 'sudo bash install_ros2.sh <distro_name>')"
     exit
