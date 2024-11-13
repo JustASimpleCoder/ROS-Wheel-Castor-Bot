@@ -68,5 +68,3 @@ rosdep update
 # Notify user of successful installation
 echo "ROS 2 ${rosDistro^} has been installed and configured!"
 echo "To start using ROS 2, open a new terminal or run 'source /opt/ros/$rosDistro/setup.bash' in the current one."
-
-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
