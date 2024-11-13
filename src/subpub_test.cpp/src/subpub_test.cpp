@@ -52,7 +52,7 @@ class MinimalSubscriber : public rclcpp::Node
     {
       subscription_ = this->create_subscription<std_msgs::msg::String>(
       "topic", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1));
-      
+
       subscription2_ = this->create_subscription<std_msgs::msg::String>(
       "my_loc", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1));
     }
@@ -63,6 +63,7 @@ class MinimalSubscriber : public rclcpp::Node
       RCLCPP_INFO(this->get_logger(), "I am subscribed to topic 'topic' and I heard: '%s'", msg->data.c_str());
     }
     rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
+    rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription2_;
 };
 
 
