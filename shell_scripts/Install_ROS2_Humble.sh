@@ -7,24 +7,28 @@ if [ "$EUID" -ne 0 ]; then
     exit
 fi
 
-# Ensure a distro argument is provided, otherwise set default to humble
-if [ -z "$1" ]; then
-    echo "No ROS2 distibution given as a parameter, setting default to humble"
-    rosDistro="${1:-humble}"
-fi
+
 
 # List of valid ROS 2 distributions
 valid_distros=("ardent" "bouncy" "crystal" "dashing" "eloquent" "foxy" "galactic" "rolling" "humble" "iron")
 
 # Convert distro name to lowercase
 rosDistro=$(echo "$1" | tr '[:upper:]' '[:lower:]')
+# Ensure a distro argument is provided, otherwise set default to humble
+
+if [ -z "$1" ]; then
+    echo "No ROS2 distibution given as a parameter, setting default to humble"
+    rosDistro="${1:-humble}"
+else
+    if [[ ! " ${valid_distros[@]} " =~ " ${rosDistro} " ]]; then
+        echo "Invalid ROS 2 distribution: ${rosDistro}"
+        echo "Valid options are: ${valid_distros[@]}"
+        exit
+    fi
+fi
 
 # Check if entered distro is valid
-if [[ ! " ${valid_distros[@]} " =~ " ${rosDistro} " ]]; then
-    echo "Invalid ROS 2 distribution: ${rosDistro}"
-    echo "Valid options are: ${valid_distros[@]}"
-    exit
-fi
+
 
 echo "Installing ROS 2 ${rosDistro^}..."
 
