@@ -40,36 +40,36 @@ if [[ "$VERSION_ID" < "20.04" ]]; then
 fi
 
 # Update and upgrade system
-apt update && apt upgrade -y
+sudo apt update && sudo  apt upgrade -y
 
 # Add ROS 2 repository
-apt install -y software-properties-common
-add-apt-repository universe
-apt update && apt install -y curl gnupg lsb-release
+sudo apt install -y software-properties-common
+sudo add-apt-repository universe
+sudo apt update && sudo apt install -y curl gnupg lsb-release
 
 # Add ROS 2 GPG key
-curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key | apt-key add -
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key | apt-key add -
 
 # Add ROS 2 apt repository
-sh -c "echo 'deb http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main' > /etc/apt/sources.list.d/ros2-latest.list"
+sudo sh -c "echo 'deb http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main' > /etc/apt/sources.list.d/ros2-latest.list"
 
 # Update package index
-apt update
+sudo apt update
 
 # Install ROS 2 base and developer packages
-apt install -y "ros-$rosDistro-desktop"
+sudo apt install -y "ros-$rosDistro-desktop"
 
 # Source ROS 2 setup in the current shell
-echo "source /opt/ros/$rosDistro/setup.bash" >> ~/.bashrc
-source /opt/ros/$rosDistro/setup.bash
+sudo echo "source /opt/ros/$rosDistro/setup.bash" >> ~/.bashrc
+sudo source /opt/ros/$rosDistro/setup.bash
 
 # Install dependencies for building packages
-apt install -y python3-rosdep python3-colcon-common-extensions
+sudo apt install -y python3-rosdep python3-colcon-common-extensions
 
 # Initialize rosdep
-rosdep init
-rosdep update
+sudo rosdep init
+sudo rosdep update
 
 # Notify user of successful installation
-echo "ROS 2 ${rosDistro^} has been installed and configured!"
-echo "To start using ROS 2, open a new terminal or run 'source /opt/ros/$rosDistro/setup.bash' in the current one."
+sudo echo "ROS 2 ${rosDistro^} has been installed and configured!"
+sudo echo "To start using ROS 2, open a new terminal or run 'source /opt/ros/$rosDistro/setup.bash' in the current one."
