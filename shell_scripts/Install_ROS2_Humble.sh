@@ -39,29 +39,29 @@ if [[ "$VERSION_ID" < "20.04" ]]; then
     exit
 fi
 
-# Update and upgrade system
-sudo apt update && sudo  apt upgrade -y
+sudo apt update && sudo apt install locales
+sudo locale-gen en_US en_US.UTF-8
+sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
-# Add ROS 2 repository
-sudo apt install -y software-properties-common
+sudo apt install software-properties-common
 sudo add-apt-repository universe
-sudo apt update && sudo apt install -y curl gnupg lsb-release
 
-# Add ROS 2 GPG key
-sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key | apt-key add -
+sudo apt update && sudo apt install curl -y
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
 
-# Add ROS 2 apt repository
-sudo sh -c "echo 'deb http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main' > /etc/apt/sources.list.d/ros2-latest.list"
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
 
-# Update package index
 sudo apt update
+sudo apt upgrade
 
-# Install ROS 2 base and developer packages
-sudo apt install -y "ros-$rosDistro-desktop"
+sudo apt install ros-$rosDistro-desktop
+sudo apt install ros-$rosDistro-ros-base
+sudo apt install ros-dev-tools
 
-# Source ROS 2 setup in the current shell
 sudo echo "source /opt/ros/$rosDistro/setup.bash" >> ~/.bashrc
 sudo source /opt/ros/$rosDistro/setup.bash
+
 
 # Install dependencies for building packages
 sudo apt install -y python3-rosdep python3-colcon-common-extensions
